@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Send Mail";
+}
+
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        <form asp-action="SendMail">
+
+            <div class="form-group" id="dvSubmit">
+                <h2>Send Mail</h2>
+                <input type="submit" onclick="HidenShowDivFunction()" value="Send Mail" class="btn btn-danger" />
+            </div>
+
+
+            <div class="form-group">
+                <div id="dvPleaseWait" style="display:none">
+                    <h2><font color="#ef0225">Please wait...</font></h2>
+                </div>               
+            </div>
+
+        </form>
+    </div>
+</div>

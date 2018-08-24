@@ -1,0 +1,39 @@
+﻿
+
+#github
+https://github.com/sendgrid/sendgrid-csharp
+
+#Sendgrid:
+https://app.sendgrid.com/login
+
+
+#Nuget
+Install-Package SendGrid
+Install-Package Microsoft.AspNet.Mvc -Version 5.2.6 
+Update-Package –reinstall Microsoft.AspNet.Mvc
+
+
+
+#Setup Environment Variables using CMD:
+01. Run CMD as administrator
+02. > setx SENDGRID_API_KEY "YOUR_API_KEY"
+
+
+
+#Get Environment Variable
+var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
+#Set Environment Variable
+var setKey = Environment.SetEnvironmentVariable("SENDGRID_API_KEY", "YOUR_API_KEY");
+
+
+
+
+Testing code:
+Random rdm = new Random();
+//var result= await Common.Helper.SendEmailUsingSendGrid();
+var result = rdm.Next(1,1000000);
+Thread.Sleep(3000);
+ViewBag.SendGrdiStatusCode = result;
+return await Task.Run(() => View());
+
