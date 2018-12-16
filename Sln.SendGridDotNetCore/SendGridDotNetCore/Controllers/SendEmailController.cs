@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,6 +9,12 @@ namespace SendGridDotNetCore.Controllers
 {
     public class SendEmailController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public SendEmailController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         // GET: SendEmail
         public ActionResult Index()
         {
@@ -15,9 +23,10 @@ namespace SendGridDotNetCore.Controllers
         }
 
         [HttpPost]
-        public async  Task<IActionResult> SendMail()
+        public async Task<IActionResult> SendMail()
         {
-            var result= await Common.Helper.SendEmailUsingSendGrid();
+            var filePath = _hostingEnvironment.ContentRootPath + @"\ProjectNotes\VoucherDetails.pdf";
+            var result = await Common.Helper.SendEmailUsingSendGrid(filePath);
             Thread.Sleep(3000);
 
             ViewBag.SendGridStatusCode = result.Item1;
