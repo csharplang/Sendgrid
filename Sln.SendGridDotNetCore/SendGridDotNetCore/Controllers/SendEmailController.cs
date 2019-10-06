@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using SendGridDotNetCore.Service;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +12,12 @@ namespace SendGridDotNetCore.Controllers
     public class SendEmailController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+        ISendGridEmailSender _ISendGridEmailSender;
 
-        public SendEmailController(IHostingEnvironment hostingEnvironment)
+        public SendEmailController(IHostingEnvironment hostingEnvironment, ISendGridEmailSender ISendGridEmailSender)
         {
             _hostingEnvironment = hostingEnvironment;
+            _ISendGridEmailSender = ISendGridEmailSender;
         }
         // GET: SendEmail
         public ActionResult Index()
@@ -25,13 +29,13 @@ namespace SendGridDotNetCore.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMail()
         {
-            var filePath = _hostingEnvironment.ContentRootPath + @"\ProjectNotes\VoucherDetails.pdf";
-            var result = await Common.Helper.SendEmailUsingSendGrid(filePath);
+            var filePath = _hostingEnvironment.ContentRootPath + @"/ProjectNotes/VoucherDetails.pdf";
+            var result = await _ISendGridEmailSender.Execute(filePath);
             Thread.Sleep(3000);
 
             ViewBag.SendGridStatusCode = result.Item1;
-            ViewBag.SendGridHeaders = result.Item2.Replace("\r\n", " <***> ");
-            ViewBag.SendGridBody = result.Item3.Replace("\r\n", " <***> ");
+            ViewBag.SendGridHeaders = result.Item2.Replace("\r\n", " <***> <br /> ");
+            ViewBag.SendGridBody = result.Item3.Replace("\r\n", " <***> <br /> ");
 
             return await Task.Run(() => View());
         }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SendGridDotNetCore.Service;
 
 namespace SendGridDotNetCore
 {
@@ -26,6 +27,7 @@ namespace SendGridDotNetCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddTransient<ISendGridEmailSender, SendGridEmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
