@@ -75,16 +75,11 @@ public async Task<Tuple<string, string, string>> Execute(string filePath)
 ![Email components-resouce files](https://github.com/csharplang/Sendgrid/blob/master/Sln.SendGridDotNetCore/SendGridDotNetCore/README/Resources/Email%20components-resouce%20files.png)
 
 
-### Attachment
-https://stackoverflow.com/questions/37945281/sending-an-email-with-attachment-using-sendgrid
+### Add Attachment
 ```C#
-myMessage.AddAttachment(Server.MapPath(@"~\img\logo.png"));
-//Initialize with a regular string literal.
-
-myMessage.AddAttachment(@"C:\test\test.txt");
-
-else // Initialize with a verbatim string literal.
-
-myMessage.AddAttachment("C:\\test\\test.txt");
+    var messageEmail = new SendGridMessage();
+    var bytes = File.ReadAllBytes(filePath);
+    var file = Convert.ToBase64String(bytes);
+    messageEmail.AddAttachment("Voucher Details Report.pdf", file);
 ```
 
