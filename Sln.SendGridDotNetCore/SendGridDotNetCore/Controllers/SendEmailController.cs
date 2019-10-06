@@ -34,8 +34,8 @@ namespace SendGridDotNetCore.Controllers
             Thread.Sleep(3000);
 
             ViewBag.SendGridStatusCode = result.Item1;
-            ViewBag.SendGridHeaders = result.Item2.Replace("\r\n", " <***> <br /> ");
-            ViewBag.SendGridBody = result.Item3.Replace("\r\n", " <***> <br /> ");
+            ViewBag.SendGridHeaders = result.Item2.Replace("\r\n", " <***> ");
+            ViewBag.SendGridBody = result.Item3.Replace("\r\n", " <***> ");
 
             return await Task.Run(() => View());
         }
